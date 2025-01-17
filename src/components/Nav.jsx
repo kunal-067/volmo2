@@ -35,7 +35,7 @@ function Nav() {
               </SheetDescription> */}
               <div className='flex gap-4 text-[16px] py-6 font-medium flex-col items-start'>
                 <a href='#'>Home </a>
-                <a href='#'>Check Status </a>
+                <a href='/login'>Check Status </a>
                 <a href='#'>About Us </a>
                 <a href='#'>Contact Us</a>
               </div>

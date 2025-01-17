@@ -50,28 +50,32 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select"
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-  
+import { toast } from "@/hooks/use-toast"
+import axios from "axios"
 
-
-let products = [{
-    _id: 90,
-    name: 'Hello',
-    status: "Shipped",
-    price: 1400,
-    createdAt: '20 jan 2024'
-}]
 
 export default function Products() {
-
+    const [data, setData] = useState([]);
+    useEffect(()=>{
+        axios.get('/api/applications').then(res=>{
+            setData(res.data.data)
+        }).catch(err=>{
+            console.log(err);
+            toast({
+                title:'Please refreach page !',
+                variant:'destructive'
+            })
+        })
+    }, [])
     return (
         <>
             <Tabs defaultValue="all">
@@ -80,7 +84,7 @@ export default function Products() {
                         <TabsTrigger value="all">All</TabsTrigger>
                         <TabsTrigger value="active">Active</TabsTrigger>
                         <TabsTrigger value="draft">Draft</TabsTrigger>
-                        <TabsTrigger value="archived" className="hidden sm:flex">
+                        <TabsTrigger value="archived" className="sm:flex">
                             Archived
                         </TabsTrigger>
                     </TabsList>
@@ -121,7 +125,7 @@ export default function Products() {
                     </div>
                 </div>
                 <TabsContent value="all">
-                    <ProductsContainer products={products} />
+                    <ProductsContainer products={data} />
                 </TabsContent>
             </Tabs>
         </>
@@ -144,18 +148,18 @@ function ProductsContainer({ products }) {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            {/* <TableHead className="hidden w-[100px] sm:table-cell">
+                            {/* <TableHead className="w-[100px] sm:table-cell">
                                 <span className="sr-only">Image</span>
                             </TableHead> */}
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Phone</TableHead>
-                            <TableHead className="hidden md:table-cell">
+                            <TableHead className="md:table-cell">
                                 Pin Code
                             </TableHead>
-                            <TableHead className="hidden md:table-cell">City</TableHead>
-                            <TableHead className="hidden md:table-cell">District</TableHead>
-                            <TableHead className="hidden md:table-cell">State</TableHead>
+                            <TableHead className="md:table-cell">City</TableHead>
+                            <TableHead className="md:table-cell">State</TableHead>
+                            <TableHead className="md:table-cell">Franchise Type</TableHead>
                             <TableHead>
                                 <span >Actions</span>
                             </TableHead>
@@ -166,7 +170,7 @@ function ProductsContainer({ products }) {
                         {
                             (products && products.length > 0) ? (
                                 products.map(product => (
-                                    <ProductCard key={product._id} name={product.name} price={product.price} img={product.image} createdAt={product.createdAt} />
+                                    <ProductCard key={product._id} formId={product._id} city={product.city} state={product.state} name={product.name} email={product.email} phone={product.phone} fType={product.fType} pinCode={product.pinCode} />
                                 ))
                             ) : <TableRow><TableCell span='5'>No list</TableCell></TableRow>
                         }
@@ -183,21 +187,22 @@ function ProductsContainer({ products }) {
 }
 
 
-const ProductCard = ({ name, price, createdAt }) => {
+const ProductCard = ({ formId, name, email, phone, fType,city,state, pinCode }) => {
     return (
         <TableRow>
             <TableCell className="font-medium">
                 {name || "No name"}
             </TableCell>
             <TableCell>
-                <Badge variant="outline">Draft</Badge>
+                {/* <Badge variant="outline">Draft</Badge> */}
+                {email || 'use@mail.co'}
             </TableCell>
-            <TableCell>₹{price}</TableCell>
-            <TableCell className="hidden md:table-cell">25</TableCell>
-            <TableCell className="hidden md:table-cell">
-                {createdAt || '2023-07-12 10:42 AM'}
+            <TableCell>₹{phone}</TableCell>
+            <TableCell className="md:table-cell">{pinCode}</TableCell>
+            <TableCell className="md:table-cell">
+                {city}
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -213,19 +218,22 @@ const ProductCard = ({ name, price, createdAt }) => {
                         <DropdownMenuItem>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-            </TableCell>
+            </TableCell> */}
 
             <TableCell>
-                <Create />
+                {state}
             </TableCell>
             <TableCell>
-                <Create />
+                {fType}
+            </TableCell>
+            <TableCell>
+                <Create formId={formId} />
             </TableCell>
         </TableRow>
     )
 }
 
-const Create = () => {
+const Create = ({formId}) => {
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -238,6 +246,26 @@ const Create = () => {
     const [status, setStatus] = useState('InActive');
     const [district, setDistrict] = useState('');
     const [city, setCity] = useState('');
+    const [password, setPassword] = useState('');
+
+    function submit(){
+        if(!id||!name||!phone||!email||!refundAmount||!state||!address||!pinCode||!fType||!status||!district||!city||!password){
+            return toast({
+                title:'Invalid Submit! please fill form correctly',
+                variant:'destructive'
+            })
+        }
+        axios.post('/api/user', {formId,id,name,email,phone,refundAmount,pinCode,fType,state,district,city,password,status,address}).then(res=>{
+            toast({
+                title:res.data.message
+            })
+        }).catch(err=>{
+            console.log(err);
+            toast({
+                title:err.response?.data?.message || err.message
+            })
+        })
+    }
 
     return (
         <Dialog>
@@ -245,37 +273,43 @@ const Create = () => {
                 {/* Save */}
                 <div className=" border-[1px] p-1 px-3 rounded-md hover:bg-gray-200 border-gray-400">Open</div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='max-h-full overflow-auto'>
                 <DialogHeader>
                     <DialogTitle>Save User data !!</DialogTitle>
-                    <DialogDescription>
-                        <Input value={name} onChange={e => setName(e.target.value)} className='my-4' placeholder='Enter user name' />
-                        <Input value={email} onChange={e => setEmail(e.target.value)} className='my-4' placeholder='Enter user Email' />
-                        <Input value={phone} onChange={e => setPhone(e.target.value)} className='my-4' placeholder='Enter user Phone' />
-                        <Textarea value={address} onChange={e => setAddress(e.target.value)} className='my-4' placeholder='Enter user Address' />
+                </DialogHeader>
+                {/* <div className=" p-2 rounded-sm border-[1px] md:max-h-[95%] overflow-auto"> */}
+                    <Input value={name} onChange={e => setName(e.target.value)} className='my-0' placeholder='Enter user name' />
+                    <Input value={email} type='email' onChange={e => setEmail(e.target.value)} className='my-0' placeholder='Enter user Email' />
+                    <Input value={phone} type='phone' onChange={e => setPhone(e.target.value)} className='my-0' placeholder='Enter user Phone' />
+                    <Textarea value={address} onChange={e => setAddress(e.target.value)} className='my-0' placeholder='Enter user Address' />
 
-                        <Select onValueChange={e=>setStatus(e)}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Choose Status" className={`${status=='Active'&&'placeholder-green-800'} ${status=='InActive'&&'placeholder-red-800'}`} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="Active" className='text-green-900'>Active</SelectItem>
-                                <SelectItem value="InActive" className='text-red-800'>InActive</SelectItem>
-                                {/* <SelectItem value="system">System</SelectItem> */}
-                            </SelectContent>
-                        </Select>
+                    <Select onValueChange={e => setStatus(e)}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Choose Status" className={`${status == 'Active' && 'placeholder-green-800'} ${status == 'InActive' && 'placeholder-red-800'}`} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Active" className='text-green-900'>Active</SelectItem>
+                            <SelectItem value="InActive" className='text-red-800'>InActive</SelectItem>
+                            {/* <SelectItem value="system">System</SelectItem> */}
+                        </SelectContent>
+                    </Select>
 
-                        <Input value={city} onChange={e => setCity(e.target.value)} className='my-4' placeholder='Enter user City' />
-                        <Input value={pinCode} onChange={e => setPinCode(e.target.value)} className='my-4' placeholder='Enter user pin-code' />
-                        <Input value={district} onChange={e => setDistrict(e.target.value)} className='my-4' placeholder='Enter user District' />
-                        <Input value={state} onChange={e => setState(e.target.value)} className='my-4' placeholder='Enter user State' />
-                        <Input value={refundAmount} onChange={e => setRefundAmount(e.target.value)} className='my-4' placeholder='Enter Refund Amount' />
-                        <Input value={fType} onChange={e => setFtype(e.target.value)} className='my-4' placeholder='Enter user Franchise Type' />
-                    </DialogDescription>
-                    <DialogClose className="bg-green-900 text-white p-2 rounded-md">
+                    <Input value={city} onChange={e => setCity(e.target.value)} className='my-0' placeholder='Enter user City' />
+                    <Input value={pinCode} onChange={e => setPinCode(e.target.value)} className='my-0' placeholder='Enter user pin-code' />
+                    <Input value={district} onChange={e => setDistrict(e.target.value)} className='my-0' placeholder='Enter user District' />
+                    <Input value={state} onChange={e => setState(e.target.value)} className='my-0' placeholder='Enter user State' />
+                    <Input value={refundAmount} onChange={e => setRefundAmount(e.target.value)} className='my-0' placeholder='Enter Refund Amount' />
+                    <Input value={fType} onChange={e => setFtype(e.target.value)} className='my-0' placeholder='Enter user Franchise Type' />
+
+                    <Input value={id} onChange={e => setId(e.target.value)} className='my-0' placeholder='Create user id' />
+                    <Input value={password} onChange={e => setPassword(e.target.value)} className='my-0' placeholder='Create password' />
+
+
+                    <DialogClose onClick={submit} className="bg-green-900 text-white w-full p-2 rounded-md">
                         Save
                     </DialogClose>
-                </DialogHeader>
+                {/* </div> */}
+
             </DialogContent>
         </Dialog>
 

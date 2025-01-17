@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
     district: String,
     state: String,
     pinCode: Number,
+    fType:String,
 
     id: {
         required: true,
@@ -37,9 +38,9 @@ const userSchema = new mongoose.Schema({
 
     status:{
         type:String,
-        enum:['active','inactive']
+        enum:['Active','InActive']
     },
-    refundedAmount:{
+    refundAmount:{
         type:Number,
         default:0
     }

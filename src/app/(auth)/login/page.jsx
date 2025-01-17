@@ -28,6 +28,7 @@ function Login() {
                 title: res.data?.message
             })
             setSubmiting(false)
+            window.location.href = '/profile'
         }).catch(err => {
             console.log(err);
             toast({

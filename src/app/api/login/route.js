@@ -5,8 +5,8 @@ import { NextResponse } from "next/server";
 export async function POST(req){
     try {
         const cookieStore = cookies();
-        const {phone, password} = await req.json();
-        const user = await User.findOne({ phone });
+        const {id, password} = await req.json();
+        const user = await User.findOne({ id });
         if(user.password!=password){
             return NextResponse.json({message: "Invalid Credentials !"}, {status:402});
         }

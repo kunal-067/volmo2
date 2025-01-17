@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const dbUrl = process.env.DB_URI || 'mongodb+srv://trekomi:AkqEPipnajKeTrTC@cluster0.uy9ofus.mongodb.net/debug-omni-erro';
+const dbUrl = process.env.DB_URI || 'mongodb+srv://trekomi:AkqEPipnajKeTrTC@cluster0.uy9ofus.mongodb.net/newOne';
 
 export async function connectDb() {
     try {
