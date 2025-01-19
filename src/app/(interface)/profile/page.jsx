@@ -14,13 +14,15 @@ function page() {
     const [pinCode, setPinCode] = useState('');
     const [fType, setFtype] = useState('');
     const [status, setStatus] = useState('InActive')
+    const [pdf, setPdf] = useState('');
 
     useEffect(() => {
         axios.get('/api/user').then(res => {
             const data = res.data.data;
             const { id, email, phone, refundAmount, state, address, pinCode, fType, status } = data
             setId(id); setEmail(email); setPhone(phone); setRefundAmount(refundAmount);
-            setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status)
+            setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status);
+            setPdf(data.pdf)
         }).catch(err => {
             console.log(err)
         })
@@ -102,7 +104,9 @@ function page() {
 
                 <div className='flex p-2 px-4 rounded-sm m-2 my-4 bg-gray-600 text-white items-center justify-between'>
                     <b>Approval Letter</b>
-                    <Button className='bg-green-900'>Download</Button>
+                    <a href={pdf} download={pdf} target='_blank'>
+                        <Button className='bg-green-900'>Download</Button>
+                    </a>
                 </div>
             </div>
         </div>

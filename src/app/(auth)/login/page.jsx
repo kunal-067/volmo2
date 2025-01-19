@@ -27,8 +27,14 @@ function Login() {
             toast({
                 title: res.data?.message
             })
-            setSubmiting(false)
-            window.location.href = '/profile'
+            setSubmiting(false);
+            localStorage.setItem('user', JSON.stringify(res.data))
+            // console.log(res,res.data, res.data.data.role)
+            if (res.data.data.role == 'Admin') {
+                window.location.href = '/admin'
+            } else {
+                window.location.href = '/profile'
+            }
         }).catch(err => {
             console.log(err);
             toast({

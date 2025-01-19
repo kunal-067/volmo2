@@ -35,10 +35,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    image:String,
+    pdf:String,
 
     status:{
         type:String,
         enum:['Active','InActive']
+    },
+    role:{
+        type:String,
+        enum:['Admin','User'],
+        default:'User'
     },
     refundAmount:{
         type:Number,
