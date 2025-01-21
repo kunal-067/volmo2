@@ -53,8 +53,8 @@ function Login() {
 
             <div className='flex flex-col w-full gap-4'>
                 <div>
-                    <Label>Id</Label>
-                    <Input value={id} onChange={e => setId(e.target.value)} className='rounded-none text-black mt-2 border-0 bg-green-100' placeholder='Enter your Id' />
+                    <Label>User Id</Label>
+                    <Input value={id} onChange={e => setId(e.target.value)} className='rounded-none text-black mt-2 border-0 bg-green-100' placeholder='Enter your User Id' />
                 </div>
                 <div>
                     <Label>Password</Label>
