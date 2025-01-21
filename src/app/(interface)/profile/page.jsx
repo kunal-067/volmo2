@@ -22,11 +22,18 @@ function page() {
             const { id, email, phone, refundAmount, state, address, pinCode, fType, status } = data
             setId(id); setEmail(email); setPhone(phone); setRefundAmount(refundAmount);
             setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status);
-            setPdf(data.pdf)
+            setPdf(()=>modifyPdfUrl(data.pdf))
         }).catch(err => {
             console.log(err)
         })
     })
+    const modifyPdfUrl = (url) => {
+        const urlParts = url.split("/upload/");
+        if (urlParts.length === 2) {
+          return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
+        }
+        return url; // Return original URL if it's not a valid Cloudinary URL
+      };
     return (
         <div className='pt-24 md:pt-28 flex justify-center'>
             <div className='max-w-[980px] w-full p-2 md:p-4'>
@@ -104,7 +111,7 @@ function page() {
 
                 <div className='flex p-2 px-4 rounded-sm m-2 my-4 bg-gray-600 text-white items-center justify-between'>
                     <b>Approval Letter</b>
-                    <a href={pdf} download={pdf} target='_blank'>
+                    <a href={pdf} download={'Approval-letter.pdf'}>
                         <Button className='bg-green-900'>Download</Button>
                     </a>
                 </div>

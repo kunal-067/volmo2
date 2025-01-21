@@ -93,13 +93,10 @@ export default function Products() {
                 <div className="flex items-center">
                     <TabsList>
                         <TabsTrigger value="all">All</TabsTrigger>
-                        <TabsTrigger value="active">Active</TabsTrigger>
-                        <TabsTrigger value="draft">Draft</TabsTrigger>
-                        <TabsTrigger value="archived" className="sm:flex">
-                            Archived
-                        </TabsTrigger>
+                        <TabsTrigger value="active">Pending</TabsTrigger>
+                        <TabsTrigger value="draft">Saved</TabsTrigger>
                     </TabsList>
-                    <div className="ml-auto flex items-center gap-2">
+                    {/* <div className="ml-auto flex items-center gap-2">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" size="sm" className="h-7 gap-1">
@@ -133,7 +130,7 @@ export default function Products() {
                                 Add Product
                             </span>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <TabsContent value="all">
                     <ProductsContainer products={data} />
@@ -152,7 +149,7 @@ function ProductsContainer({ products }) {
             <CardHeader>
                 <CardTitle>Users</CardTitle>
                 <CardDescription>
-                    Manage your User and view their sales performance.
+                    Manage your User and Save their Data.
                 </CardDescription>
             </CardHeader>
             <CardContent>

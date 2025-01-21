@@ -8,12 +8,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Menu } from 'lucide-react'
+import { Button } from './ui/button'
 
 
 function Nav() {
   return (
     <div className='flex justify-between items-center bg-green-900 py-5 px-8 sm:px-20 lg:px-32 w-full fixed z-50'>
-      <img src="/valmologo.png" alt="valmologo" />
+      <a href='/home'><img src="/valmologo.png" alt="valmologo" /></a>
       <ul className='hidden md:flex items-center gap-x-4 lg:gap-x-10 font-[500] text-[16px] lg:text-[20px] text-white'>
         <a href='/home' className='p-4'>Home </a>
         <a href='/login' className='p-4'>Check Status </a>
@@ -26,7 +27,7 @@ function Nav() {
           <SheetTrigger>
             <Menu className='text-white size-8' />
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className='bg-green-200'>
             <SheetHeader>
               <SheetTitle>Routes</SheetTitle>
               {/*<SheetDescription>
@@ -37,7 +38,9 @@ function Nav() {
                 <a href='/home'>Home </a>
                 <a href='/login'>Check Status </a>
                 <a href='/about'>About Us </a>
-                <a href='/contact'>Contact Us</a>
+                <a href='/contact'>
+                  <Button className='bg-green-900'>Contact Us</Button>
+                </a>
               </div>
             </SheetHeader>
           </SheetContent>

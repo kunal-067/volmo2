@@ -10,7 +10,7 @@ function Layout({ children }) {
 
             <footer className='bg-green-900 text-gray-400 font-roboto py-8'>
                 <div className=' flex px-8 md:px-28 gap-8 py-8 flex-col md:flex-row'>
-                    <img src='/valmologo.png' alt='valmologo' className='h-12 w-auto'></img>
+                    <img src='/valmologo.png' alt='valmologo' className='md:h-12 md:w-auto w-[190px]'></img>
 
                     <div className='w-full md:w-[25%] flex flex-col justify-center md:ml-8'>
                         <h2 className='text-gray-200 text-[18px] mb-1'>Fashnear Technologies Private Limited</h2>

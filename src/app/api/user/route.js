@@ -77,7 +77,7 @@ export async function POST(req) {
 
         // Upload to Cloudinary
         const uploadedImg = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+            cloudinary.uploader.upload_stream({ resource_type: 'auto', folder: 'valmoPics' }, (error, result) => {
                 if (error) {
                     console.error("Error uploading to Cloudinary:", error);
                     reject(error);
@@ -89,7 +89,7 @@ export async function POST(req) {
         });
 
         const uploadedPdf = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+            cloudinary.uploader.upload_stream({ resource_type: 'auto', folder: 'valmoPdfs' }, (error, result) => {
                 if (error) {
                     console.error("Error uploading Pdf to Cloudinary:", error);
                     reject(error);
