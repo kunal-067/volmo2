@@ -22,26 +22,26 @@ function page() {
             const { id, email, phone, refundAmount, state, address, pinCode, fType, status } = data
             setId(id); setEmail(email); setPhone(phone); setRefundAmount(refundAmount);
             setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status);
-            setPdf(data.pdf)
+            setPdf(()=>modifyPdfUrl(data.pdf))
         }).catch(err => {
             console.log(err)
         })
     })
-    // const modifyPdfUrl = (url) => {
-    //     const urlParts = url.split("/upload/");
-    //     if (urlParts.length === 2) {
-    //       return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
-    //     }
-    //     return url; // Return original URL if it's not a valid Cloudinary URL
-    //   };
+    const modifyPdfUrl = (url) => {
+        const urlParts = url.split("/upload/");
+        if (urlParts.length === 2) {
+          return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
+        }
+        return url; // Return original URL if it's not a valid Cloudinary URL
+      };
 
-    const forceDownload = () => {
+      const forceDownload = () => {
         const downloadUrl = pdf.replace('/upload/', '/upload/fl_attachment/');
         const link = document.createElement('a');
         link.href = downloadUrl;
         link.download = 'Approval-letter.pdf';
         link.click();
-    };
+      };
     return (
         <div className='pt-24 md:pt-28 flex justify-center bg-yellow-50'>
             <div className='max-w-[980px] w-full p-2 md:p-4 bg-yellow-50'>
@@ -119,9 +119,9 @@ function page() {
 
                 <div className='flex p-2 px-4 rounded-sm m-2 my-4 bg-gray-600 text-white items-center justify-between'>
                     <b>Approval Letter</b>
-                    {/* <a href={pdf} download={'Approval-letter.pdf'} target='_blank'> */}
-                        <Button onClick={forceDownload} className='bg-green-900'>Download</Button>
-                    {/* </a> */}
+                    <a href={pdf} download={'Approval-letter.pdf'} target='_blank'>
+                        <Button className='bg-green-900'>Download</Button>
+                    </a>
                 </div>
             </div>
         </div>
