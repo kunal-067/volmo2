@@ -22,25 +22,33 @@ function page() {
             const { id, email, phone, refundAmount, state, address, pinCode, fType, status } = data
             setId(id); setEmail(email); setPhone(phone); setRefundAmount(refundAmount);
             setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status);
-            setPdf(()=>modifyPdfUrl(data.pdf))
+            setPdf(data.pdf)
         }).catch(err => {
             console.log(err)
         })
     })
-    const modifyPdfUrl = (url) => {
-        const urlParts = url.split("/upload/");
-        if (urlParts.length === 2) {
-          return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
-        }
-        return url; // Return original URL if it's not a valid Cloudinary URL
-      };
+    // const modifyPdfUrl = (url) => {
+    //     const urlParts = url.split("/upload/");
+    //     if (urlParts.length === 2) {
+    //       return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
+    //     }
+    //     return url; // Return original URL if it's not a valid Cloudinary URL
+    //   };
+
+    const forceDownload = () => {
+        const downloadUrl = pdf.replace('/upload/', '/upload/fl_attachment/');
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'Approval-letter.pdf';
+        link.click();
+    };
     return (
-        <div className='pt-24 md:pt-28 flex justify-center'>
-            <div className='max-w-[980px] w-full p-2 md:p-4'>
-                <h2 className='text-[28px] p-1 md:text-[42px] font-medium leading-8'>Application No.: Hello.js</h2>
+        <div className='pt-24 md:pt-28 flex justify-center bg-yellow-50'>
+            <div className='max-w-[980px] w-full p-2 md:p-4 bg-yellow-50'>
+                <h2 className='text-[28px] p-1 md:text-[42px] font-medium leading-8'>Application No.: {id}</h2>
                 <marquee className='py-3 text-green-900 font-mono text-[16px] md:text-[18px] font-semibold'>Welcome {'Kunal Shroff'} - view your application</marquee>
 
-                <div className='overflow-x-auto'>
+                <div className='overflow-x-auto bg-yellow-50'>
                     <div className='text-nowrap min-w-[600px] bg-slate-50 font-sans opacity-80 text-[14px] md:text-[16px] overflow-x-auto'>
 
                         <div className='flex min-w-fit gap-2 w-full p-4 bg-gray-200'>
@@ -73,7 +81,7 @@ function page() {
                         <div className='flex min-w-fit gap-2 w-full  p-4'>
                             <div className='flex w-[50%]'>
                                 <b className='w-1/2'>Email</b>
-                                <p className='w-1/2 text-wrap'>{email || 'Not given'}</p>
+                                <p className='w-1/2 min-w-fit text-wrap'>{email || 'Not given'}</p>
                             </div>
                             <div className='flex w-[50%]'>
                                 <b className='w-1/2'>Mobile</b>
@@ -111,9 +119,9 @@ function page() {
 
                 <div className='flex p-2 px-4 rounded-sm m-2 my-4 bg-gray-600 text-white items-center justify-between'>
                     <b>Approval Letter</b>
-                    <a href={pdf} download={'Approval-letter.pdf'}>
-                        <Button className='bg-green-900'>Download</Button>
-                    </a>
+                    {/* <a href={pdf} download={'Approval-letter.pdf'} target='_blank'> */}
+                        <Button onClick={forceDownload} className='bg-green-900'>Download</Button>
+                    {/* </a> */}
                 </div>
             </div>
         </div>

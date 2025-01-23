@@ -94,7 +94,7 @@ function Home() {
             </div>
 
             <div className='bg-green-900 p-4 sm:p-8 text-white'>
-                <p className='text-center text-[24px] leading-6 md:leading-10 sm:text-[32px] mb-4'>We are a trusted partner in simplifying logistics</p>
+                <p className='text-center text-[24px] leading-6 md:leading-10 sm:text-[32px] mb-4 font-mono'>We are a trusted partner in simplifying logistics</p>
                 <p className='text-center mb-4 text-[14px] md:text-[18px]'>Our aim is to streamline the logistics process - offering a smooth and efficient delivery experience, all while delivering excellent value by offering the lowest cost.</p>
 
                 <div className='flex flex-wrap md:px-12 justify-between py-4 gap-2'>

@@ -18,6 +18,7 @@ function Nav() {
       <ul className='hidden md:flex items-center gap-x-4 lg:gap-x-10 font-[500] text-[16px] lg:text-[20px] text-white'>
         <a href='/home' className='p-4'>Home </a>
         <a href='/login' className='p-4'>Check Status </a>
+        <a href='/track' className='p-4'>Track Order</a>
         <a href='/about' className='p-4'>About Us </a>
         <a href='/contact' className='p-4'>Contact Us</a>
       </ul>
@@ -27,7 +28,7 @@ function Nav() {
           <SheetTrigger>
             <Menu className='text-white size-8' />
           </SheetTrigger>
-          <SheetContent className='bg-green-200'>
+          <SheetContent className='bg-green-900 text-white'>
             <SheetHeader>
               <SheetTitle>Routes</SheetTitle>
               {/*<SheetDescription>
@@ -37,9 +38,10 @@ function Nav() {
               <div className='flex gap-4 text-[16px] py-6 font-medium flex-col items-start'>
                 <a href='/home'>Home </a>
                 <a href='/login'>Check Status </a>
+                <a href='/track'>Track Order</a>
                 <a href='/about'>About Us </a>
                 <a href='/contact'>
-                  <Button className='bg-green-900'>Contact Us</Button>
+                  <Button className=''>Contact Us</Button>
                 </a>
               </div>
             </SheetHeader>

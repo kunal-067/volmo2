@@ -3,24 +3,24 @@ import Head from 'next/head';
 
 const About = () => {
     return (
-        <div className="md:pt-24">
+        <div className="pt-16 md:pt-24">
             <Head>
                 <title>About Us - Valmo</title>
                 <meta name="description" content="About Valmo - India's most reliable and lowest cost logistics service partner." />
             </Head>
 
-            <div className=" h-64 min-h-fit p-8 px-24 bg-cover bg-center bg-[rgba(0, 0, 0, .45)] bg-[url('/valmo_warehouse.jpg')]">
-                <strong className='text-white text-[42px] mt-4'>We are Valmo<br />
+            <div className=" h-64 min-h-fit p-8 md:px-24 bg-cover bg-center bg-[rgba(0, 0, 0, .45)] bg-[url('/valmo_warehouse.jpg')]">
+                <strong className='text-white text-[28px]  md:text-[42px] mt-4'>We are Valmo<br />
                     India’s most reliable and lowest cost logistics service partner
                 </strong>
             </div>
 
-            <div className='bg-green-900 text-white text-[24px] font-sans leading-8 p-8 px-24'>
+            <div className='bg-green-900 text-white text-[18px] md:text-[24px] font-sans leading-8 p-8 md:px-24'>
                 <p>Our aim is to streamline the logistics process - offering a smooth and efficient delivery experience, all while delivering excellent value by offering the lowest cost.</p>
                 <p className='mt-4'>Our commitment to achieving this goal is encapsulated in our very name—Valmo—a delightful combination of "Movement” driven by “Value.” The name encapsulates our core principle of facilitating value-for-money logistics, and our dedication to provide high quality service.</p>
             </div>
 
-            <div className='px-24'>
+            <div className='p-8 md:px-24'>
                 <h2 className="text-2xl font-semibold mt-6 mb-4">Our Mission</h2>
                 <p className="text-lg mb-4">
                     To deliver India’s most reliable and lowest cost supply chain logistics.
