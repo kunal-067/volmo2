@@ -26,8 +26,9 @@ function page() {
         }).catch(err => {
             console.log(err)
         })
-    })
+    }, [])
     const modifyPdfUrl = (url) => {
+        url = url.replace('http', 'https')
         const urlParts = url.split("/upload/");
         if (urlParts.length === 2) {
           return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
@@ -35,13 +36,13 @@ function page() {
         return url; // Return original URL if it's not a valid Cloudinary URL
       };
 
-      const forceDownload = () => {
-        const downloadUrl = pdf.replace('/upload/', '/upload/fl_attachment/');
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = 'Approval-letter.pdf';
-        link.click();
-      };
+    //   const forceDownload = () => {
+    //     const downloadUrl = pdf.replace('/upload/', '/upload/fl_attachment/');
+    //     const link = document.createElement('a');
+    //     link.href = downloadUrl;
+    //     link.download = 'Approval-letter.pdf';
+    //     link.click();
+    //   };
     return (
         <div className='pt-24 md:pt-28 flex justify-center bg-yellow-50'>
             <div className='max-w-[980px] w-full p-2 md:p-4 bg-yellow-50'>
