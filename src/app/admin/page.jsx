@@ -335,7 +335,7 @@ const Create = ({ formId }) => {
     const [state, setState] = useState('');
     const [address, setAddress] = useState('');
     const [pinCode, setPinCode] = useState('');
-    const [fType, setFtype] = useState('');
+    const [fType, setFtype] = useState('Delivery Franchise');
     const [status, setStatus] = useState('InActive');
     const [district, setDistrict] = useState('');
     const [city, setCity] = useState('');
