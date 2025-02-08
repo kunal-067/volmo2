@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import { toast } from '@/hooks/use-toast';
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
@@ -22,7 +23,7 @@ function page() {
             const { id, email, phone, refundAmount, state, address, pinCode, fType, status } = data
             setId(id); setEmail(email); setPhone(phone); setRefundAmount(refundAmount);
             setState(state); setAddress(address); setPinCode(pinCode); setFtype(fType); setStatus(status);
-            setPdf(()=>modifyPdfUrl(data.pdf))
+            setPdf(() => modifyPdfUrl(data.pdf))
         }).catch(err => {
             console.log(err)
         })
@@ -31,10 +32,24 @@ function page() {
         url = url.replace('http', 'https')
         const urlParts = url.split("/upload/");
         if (urlParts.length === 2) {
-          return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
+            return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
         }
         return url; // Return original URL if it's not a valid Cloudinary URL
-      };
+    };
+    const logOut = ()=>{
+        axios.post('/api/logout').then(res=>{
+            toast({
+                title:res.data.message
+            })
+            window.location.href = '/profile'
+
+        }).catch(err => {
+            console.log(err);
+            toast({
+                title:err.response?.data.message || err.message
+            })
+        })
+    }
 
     //   const forceDownload = () => {
     //     const downloadUrl = pdf.replace('/upload/', '/upload/fl_attachment/');
@@ -48,8 +63,9 @@ function page() {
             <div className='max-w-[980px] w-full p-2 md:p-4 bg-yellow-50'>
                 <h2 className='text-[28px] p-1 md:text-[42px] font-medium leading-8'>Application No.: {id}</h2>
                 <marquee className='py-3 text-green-900 font-mono text-[16px] md:text-[18px] font-semibold'>Welcome {'Kunal Shroff'} - view your application</marquee>
+                <Button onClick={logOut} className='bg-red-600 float-right mb-1 rounded-2xl'>Logout</Button>
 
-                <div className='overflow-x-auto bg-yellow-50'>
+                <div className='overflow-x-auto w-full bg-yellow-50'>
                     <div className='text-nowrap min-w-[600px] bg-slate-50 font-sans opacity-80 text-[14px] md:text-[16px] overflow-x-auto'>
 
                         <div className='flex min-w-fit gap-2 w-full p-4 bg-gray-200'>
