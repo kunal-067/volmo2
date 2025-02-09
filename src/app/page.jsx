@@ -9,7 +9,7 @@ export default function Page() {
             <Nav />
             <Home />
 
-            <footer className='bg-green-900 text-gray-400 font-roboto py-8'>
+            <footer className='bg-[#092d5e] text-gray-400 font-roboto py-8'>
                 <div className=' flex px-8 md:px-28 gap-8 py-8 flex-col md:flex-row'>
                     <img src='/valmologo.png' alt='valmologo' className='md:h-12 md:w-auto w-[190px]'></img>
 

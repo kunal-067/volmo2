@@ -13,7 +13,7 @@ import { Button } from './ui/button'
 
 function Nav() {
   return (
-    <div className='flex justify-between items-center bg-green-900 py-5 px-8 sm:px-20 lg:px-32 w-full fixed z-50'>
+    <div className='flex justify-between items-center bg-[#092d5e] py-5 px-8 sm:px-20 lg:px-32 w-full fixed z-50'>
       <a href='/home'><img src="/valmologo.png" alt="valmologo" /></a>
       <ul className='hidden md:flex items-center gap-x-4 lg:gap-x-10 font-[500] text-[16px] lg:text-[20px] text-white'>
         <a href='/home' className='p-4'>Home </a>

@@ -137,7 +137,7 @@ function page() {
                 <div className='flex p-2 px-4 rounded-sm m-2 my-4 bg-gray-600 text-white items-center justify-between'>
                     <b>Approval Letter</b>
                     <a href={pdf} download={'Approval-letter.pdf'} target='_blank'>
-                        <Button className='bg-green-900'>Download</Button>
+                        <Button className='bg-[#092d5e]'>Download</Button>
                     </a>
                 </div>
             </div>

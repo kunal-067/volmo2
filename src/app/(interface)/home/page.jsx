@@ -83,7 +83,7 @@ function Home() {
       }, []);
     return (
         <div className='md:pt-24'>
-            <div className='p-5 md:p-12 pt-32 flex flex-col md:flex-row justify-between bg-gradient-to-r from-green-300 to-emerald-700'>
+            <div className='p-5 md:p-12 pt-32 flex flex-col md:flex-row justify-between bg-gradient-to-r from-[#3170b0] to-[#092d5e]'>
                 <div className='text-white content-center'>
                     <p className='font-mono text-[28px] md:text-[36px] mb-4 leading-8 md:leading-10 font-thin'>A trusted partner in simplifying logistics</p>
 
@@ -93,7 +93,7 @@ function Home() {
                 <img src="/valmo-delivery.jpg" alt='Valmo Delivery' width={100} height={100} className='rounded-lg w-full mt-4 md:mt-0 md:w-[50%] h-auto' />
             </div>
 
-            <div className='bg-green-900 p-4 sm:p-8 text-white'>
+            <div className='bg-[#092d5e] p-4 sm:p-8 text-white'>
                 <p className='text-center text-[24px] leading-6 md:leading-10 sm:text-[32px] mb-4 font-mono'>We are a trusted partner in simplifying logistics</p>
                 <p className='text-center mb-4 text-[14px] md:text-[18px]'>Our aim is to streamline the logistics process - offering a smooth and efficient delivery experience, all while delivering excellent value by offering the lowest cost.</p>
 
@@ -263,7 +263,7 @@ function FormCard({ f = false }) {
 
     return (
         <Dialog>
-            <DialogTrigger className='bg-green-900 py-2 text-white mt-2 px-3 font-serif  rounded-md'>
+            <DialogTrigger className='bg-[#092d5e] py-2 text-white mt-2 px-3 font-serif  rounded-md'>
                 {f ? 'Join Us Now' : 'Join Us'}
             </DialogTrigger>
             <DialogContent>
