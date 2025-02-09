@@ -28,7 +28,7 @@ function Nav() {
           <SheetTrigger>
             <Menu className='text-white size-8' />
           </SheetTrigger>
-          <SheetContent className='bg-green-900 text-white'>
+          <SheetContent className='bg-[#092d5e] text-white'>
             <SheetHeader>
               <SheetTitle>Routes</SheetTitle>
               {/*<SheetDescription>
