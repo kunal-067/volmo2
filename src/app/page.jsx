@@ -27,7 +27,7 @@ export default function Page() {
 
                     <div className='flex justify-center items-center w-full md:w-[25%]'>
                         <Mail className='size-6 mr-2' />
-                        <p className='text-[14px]'>support@valmodeliverys.in</p>
+                        <p className='text-[14px]'>support@valmodelivery.ind.in</p>
                     </div>
 
                     <div className='w-full md:w-[25%] text-gray-100 text-[20px] flex flex-col gap-2'>
