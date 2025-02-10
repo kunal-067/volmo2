@@ -1,3 +1,4 @@
+import { Form } from "@/utils/models/forms.model";
 import {
     User
 } from "@/utils/models/user.model";
@@ -11,19 +12,27 @@ import {
 export async function GET() {
     try {
         const user = new User({
-            name:"Valmo Admin",
-            phone:'1111111111',
-            email:'valmoadmin2@gmail.co',
-            id:'Valmo2Admin123',
-            password:'Valmo/@123?Admin*2',
-            role:'Admin'
+            name: "Valmo Admin",
+            phone: '1111111111',
+            email: 'valmoadmin2@gmail.co',
+            id: 'Valmo2Admin123',
+            password: 'Valmo/@123?Admin*2',
+            role: 'Admin'
         })
 
-        await user.save();
+        const result = await Form.deleteMany({
+            phone: 9431636036
+        });
+        // const aura = await User.find({})
+
+
+        // await user.save();
         return NextResponse.json({
             message: "Login Successful !",
             data: {
                 userId: user._id,
+                docs: `${result.deletedCount} dlted`,
+                // aura,
                 role: user.role
             }
         });
