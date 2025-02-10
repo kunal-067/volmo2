@@ -246,18 +246,23 @@ function FormCard({ f = false }) {
     const [pinCode, setPinCode] = useState('');
     const [fType, setFtype] = useState('Delivery Franchise');
     const [state, setState] = useState('');
-    const [district, setDistrict] = useState('')
+    const [district, setDistrict] = useState('');
+
+    const [disable, setDisable] = useState('false');
 
     function submit() {
+        setDisable('true')
         axios.post('/api/applications', { name, phone, email, pinCode, fType, state, district }).then(res => {
             toast({
                 title: res.data.message
             });
+            setDisable('false')
             setTimeout(() => {
                 location.reload();
             }, 100);
         }).catch(err => {
             console.log(err);
+            setDisable('true')
             toast({
                 title: err.response?.data?.message || err.message,
                 variant: 'destructive'
@@ -317,7 +322,7 @@ function FormCard({ f = false }) {
                         </SelectContent>
                     </Select>
 
-                    <Button className='mt-2' onClick={submit}>Submit</Button>
+                    <Button disable={disable} className='mt-2' onClick={submit}>Submit</Button>
 
                 </div>
             </DialogContent>

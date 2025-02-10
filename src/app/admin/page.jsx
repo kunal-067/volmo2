@@ -72,7 +72,7 @@ export default function Products() {
         let user = { data: { role: 'User' } };
         let Lusr = localStorage.getItem('user')
         // console.log(Lusr)
-        if (Lusr&&Lusr!='undefined') {
+        if (Lusr && Lusr != 'undefined') {
             user = JSON.parse(localStorage.getItem('user'));
         }
         if (user.data.role !== 'Admin') {
@@ -179,14 +179,14 @@ function AllUserContainer({ products }) {
                             <TableHead className="md:table-cell">Id</TableHead>
                             <TableHead className="md:table-cell">Password</TableHead>
                             <TableHead className="md:table-cell">Franchise Type</TableHead>
-                          
+
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {
                             (products && products.length > 0) ? (
                                 products.map(product => (
-                                    <AllUserCard key={product._id} formId={product._id} city={product.city} state={product.state} name={product.name} email={product.email} phone={product.phone} fType={product.fType} pinCode={product.pinCode} />
+                                    <AllUserCard key={product._id} id={product.id} password={product.password} city={product.city} state={product.state} name={product.name} email={product.email} phone={product.phone} fType={product.fType} pinCode={product.pinCode} />
                                 ))
                             ) : <TableRow><TableCell span='5'>No list</TableCell></TableRow>
                         }
@@ -202,7 +202,7 @@ function AllUserContainer({ products }) {
     )
 }
 
-const AllUserCard = ({ name, email, phone, fType, pinCode, id,password }) => {
+const AllUserCard = ({ name, email, phone, fType, pinCode, id, password }) => {
     return (
         <TableRow>
             <TableCell className="font-medium">
@@ -409,10 +409,13 @@ const Create = ({ formId }) => {
     const [city, setCity] = useState('');
     const [password, setPassword] = useState('');
     const [img, setImg] = useState('');
-    const [pdf, setPdf] = useState('')
+    const [pdf, setPdf] = useState('');
+
+    const [disable, setDisable] = useState('false')
 
     function submit() {
-        if (!id || !name || !phone || !email || !refundAmount || !state || !address || !pinCode || !fType || !status || !district || !city || !password) {
+        setDisable('true')
+        if (!id || !name || !phone || !email || !refundAmount || !state || !address || !pinCode || !fType || !status || !district || !city || !password || !pdf) {
             console.log(id, name, phone, email, refundAmount, state, address, pinCode, fType, status, district, city, password)
             return toast({
                 title: 'Invalid Submit! please fill form correctly',
@@ -442,11 +445,16 @@ const Create = ({ formId }) => {
             toast({
                 title: res.data.message
             })
+            setDisable('false')
+            setTimeout(() => {
+                location.reload()
+            }, 100);
         }).catch(err => {
             console.log(err);
             toast({
                 title: err.response?.data?.message || err.message
             })
+            setDisable('false')
         })
     }
     function handleImage(e) {
@@ -538,9 +546,9 @@ const Create = ({ formId }) => {
                 <Input value={password} onChange={e => setPassword(e.target.value)} className='my-0' placeholder='Create password' />
 
 
-                <DialogClose onClick={submit} className="bg-green-900 text-white w-full p-2 rounded-md">
+                <Button disable={disable} onClick={submit} className="bg-green-900 text-white w-full p-2 rounded-md">
                     Save
-                </DialogClose>
+                </Button>
                 {/* </div> */}
 
             </DialogContent>
