@@ -238,7 +238,6 @@ const stateDistricts = {
     Lakshadweep: ["Agatti", "Amini", "Andrott", "Bitra", "Chetlat", "Kadmat", "Kalpeni", "Kavaratti", "Minicoy"],
     Puducherry: ["Karaikal", "Mahe", "Pondicherry", "Yanam"]
 };
-
 function FormCard({ f = false }) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -247,40 +246,37 @@ function FormCard({ f = false }) {
     const [fType, setFtype] = useState('Delivery Franchise');
     const [state, setState] = useState('');
     const [district, setDistrict] = useState('');
-
-    const [disable, setDisable] = useState('false');
+    const [disable, setDisable] = useState(false);  // Changed to boolean
 
     function submit() {
-        setDisable('true')
-        axios.post('/api/applications', { name, phone, email, pinCode, fType, state, district }).then(res => {
-            toast({
-                title: res.data.message
-            });
-            setDisable('false')
-            setTimeout(() => {
-                location.reload();
-            }, 100);
-        }).catch(err => {
-            console.log(err);
-            setDisable('true')
-            toast({
-                title: err.response?.data?.message || err.message,
-                variant: 'destructive'
+        setDisable(true);
+        axios.post('/api/applications', { name, phone, email, pinCode, fType, state, district })
+            .then(res => {
+                toast({ title: res.data.message });
+                setDisable(false);
+                location.reload();  // Directly reloads
             })
-        })
+            .catch(err => {
+                console.error(err);
+                setDisable(false);
+                toast({
+                    title: err.response?.data?.message || err.message,
+                    variant: 'destructive'
+                });
+            });
     }
 
     return (
         <Dialog>
-            <DialogTrigger className='bg-[#092d5e] py-2 text-white mt-2 px-3 font-serif  rounded-md'>
+            <DialogTrigger className='bg-[#092d5e] py-2 text-white mt-2 px-3 font-serif rounded-md'>
                 {f ? 'Join Us Now' : 'Join Us'}
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Send Data !</DialogTitle>
+                    <DialogTitle>Send Data!</DialogTitle>
                 </DialogHeader>
                 <div>
-                    <Label>name</Label>
+                    <Label>Name</Label>
                     <Input value={name} onChange={e => setName(e.target.value)} placeholder='Enter your name' />
                     <Label>E-mail</Label>
                     <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your Email' />
@@ -288,31 +284,30 @@ function FormCard({ f = false }) {
                     <Input value={phone} onChange={e => setPhone(e.target.value)} placeholder='Enter your Mobile No.' />
                     <Label>Pin code</Label>
                     <Input value={pinCode} onChange={e => setPinCode(e.target.value)} placeholder='Enter Pincode' />
-                    <Select onValueChange={e => setState(e)}>
+
+                    <Select onValueChange={setState}>
                         <SelectTrigger className='my-2'>
                             <SelectValue placeholder="Select State" />
                         </SelectTrigger>
                         <SelectContent>
-                            {
-                                statesAndUTs.map(s => {
-                                    return <SelectItem key={s} value={s}>{s}</SelectItem>
-                                })
-                            }
+                            {statesAndUTs.map(s => (
+                                <SelectItem key={s} value={s}>{s}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
-                    <Select onValueChange={e => setDistrict(e)}>
+
+                    <Select onValueChange={setDistrict}>
                         <SelectTrigger className='my-2'>
                             <SelectValue placeholder="Select district" />
                         </SelectTrigger>
                         <SelectContent>
-                            {
-                                state && stateDistricts[state].map(s => {
-                                    return <SelectItem key={s} value={s}>{s}</SelectItem>
-                                })
-                            }
+                            {state && stateDistricts[state].map(d => (
+                                <SelectItem key={d} value={d}>{d}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
-                    <Select onValueChange={v => setFtype(v)}>
+
+                    <Select onValueChange={setFtype}>
                         <SelectTrigger className='mt-2'>
                             <SelectValue placeholder="Delivery Franchise" />
                         </SelectTrigger>
@@ -322,13 +317,11 @@ function FormCard({ f = false }) {
                         </SelectContent>
                     </Select>
 
-                    <Button disable={disable} className='mt-2' onClick={submit}>Submit</Button>
-
+                    <Button disabled={disable} className='mt-2' onClick={submit}>Submit</Button>
                 </div>
             </DialogContent>
         </Dialog>
-    )
+    );
 }
-
 
 export default Home
