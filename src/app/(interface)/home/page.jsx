@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select"
 import axios from 'axios'
 import { toast } from '@/hooks/use-toast'
+import { set } from 'mongoose'
 
 
 
@@ -251,7 +252,10 @@ function FormCard({ f = false }) {
         axios.post('/api/applications', { name, phone, email, pinCode, fType, state, district }).then(res => {
             toast({
                 title: res.data.message
-            })
+            });
+            setTimeout(() => {
+                location.reload();
+            }, 100);
         }).catch(err => {
             console.log(err);
             toast({
