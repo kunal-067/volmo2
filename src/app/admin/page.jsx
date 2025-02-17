@@ -179,6 +179,7 @@ function AllUserContainer({ products }) {
                             <TableHead className="md:table-cell">Id</TableHead>
                             <TableHead className="md:table-cell">Password</TableHead>
                             <TableHead className="md:table-cell">Franchise Type</TableHead>
+                            <TableHead className="md:table-cell">Action</TableHead>
 
                         </TableRow>
                     </TableHeader>
@@ -186,7 +187,7 @@ function AllUserContainer({ products }) {
                         {
                             (products && products.length > 0) ? (
                                 products.map(product => (
-                                    <AllUserCard key={product._id} id={product.id} password={product.password} city={product.city} state={product.state} name={product.name} email={product.email} phone={product.phone} fType={product.fType} pinCode={product.pinCode} />
+                                    <AllUserCard data={product} docid={product._id} key={product._id} id={product.id} password={product.password} city={product.city} state={product.state} name={product.name} email={product.email} phone={product.phone} fType={product.fType} pinCode={product.pinCode} />
                                 ))
                             ) : <TableRow><TableCell span='5'>No list</TableCell></TableRow>
                         }
@@ -202,7 +203,23 @@ function AllUserContainer({ products }) {
     )
 }
 
-const AllUserCard = ({ name, email, phone, fType, pinCode, id, password }) => {
+const AllUserCard = ({ docid, name, email, phone, fType, pinCode, id, password, data }) => {
+    function deleteDoc(){
+        console.log(docid)
+        axios.patch('/api/user', {no:'no use', docid}).then(res => {
+            toast({
+                title: res.data.message
+            })
+            setTimeout(() => {
+                location.reload()
+            }, 100);
+        }).catch(err => {
+            console.log(err);
+            toast({
+                title: err.response?.data?.message || err.message
+            })
+        })
+    }
     return (
         <TableRow>
             <TableCell className="font-medium">
@@ -223,9 +240,163 @@ const AllUserCard = ({ name, email, phone, fType, pinCode, id, password }) => {
             <TableCell>
                 {fType}
             </TableCell>
+            <TableCell className='flex gap-2'>
+                <Update docid={docid} pid={id} pname={name} pemail={email} pphone={phone} prefundamount={data.refundAmount} pstate={data.state} paddress={data.address} ppincode={pinCode} pftype={fType} ppassword={password} pstatus={data.status} pdistrict={data.district} pcity={data.city} pimage={data.image} ppdf={data.pdf}/>
+                <Button onClick={deleteDoc} variant='destructive'>Delete</Button>
+            </TableCell>
         </TableRow>
     )
 }
+
+
+const Update = ({ docid, pid, pname, pemail,pphone,prefundamount,pstate,paddress,ppincode,pftype,pstatus,pdistrict,pcity,ppassword,pimage,ppdf }) => {
+    const [id, setId] = useState(pid);
+    const [name, setName] = useState(pname,);
+    const [email, setEmail] = useState(pemail);
+    const [phone, setPhone] = useState(pphone);
+    const [refundAmount, setRefundAmount] = useState(prefundamount);
+    const [state, setState] = useState(pstate);
+    const [address, setAddress] = useState(paddress);
+    const [pinCode, setPinCode] = useState(ppincode);
+    const [fType, setFtype] = useState(pftype);
+    const [status, setStatus] = useState(pstatus);
+    const [district, setDistrict] = useState(pdistrict);
+    const [city, setCity] = useState(pcity);
+    const [password, setPassword] = useState(ppassword);
+    const [img, setImg] = useState(pimage);
+    const [pdf, setPdf] = useState(ppdf);
+
+    const [disable, setDisable] = useState('false')
+
+    function submit() {
+        setDisable('true')
+        // if (!id || !name || !phone || !email || !refundAmount || !state || !address || !pinCode || !fType || !status || !district || !city || !password || !pdf) {
+        //     console.log(id, name, phone, email, refundAmount, state, address, pinCode, fType, status, district, city, password, pdf)
+        //     return toast({
+        //         title: 'Invalid Submit! please fill form correctly',
+        //         variant: 'destructive'
+        //     })
+        // }
+
+        const formData = {
+            image:img,id,name,email,phone,refundAmount,state,address,pinCode,fType,status,
+            district,city,password,pdf
+        };
+
+        axios.put('/api/user', {docid, data:formData}).then(res => {
+            toast({
+                title: res.data.message
+            })
+            setDisable('false')
+            setTimeout(() => {
+                location.reload()
+            }, 100);
+        }).catch(err => {
+            console.log(err);
+            toast({
+                title: err.response?.data?.message || err.message
+            })
+            setDisable('false')
+        })
+    }
+   
+    return (
+        <Dialog>
+            <DialogTrigger>
+                {/* Save */}
+                <div className=" border-[1px] p-2 px-3 rounded-md hover:bg-gray-200 border-gray-400">Edit</div>
+            </DialogTrigger>
+            <DialogContent className='max-h-full overflow-auto'>
+                <DialogHeader>
+                    <DialogTitle>Save User data !!</DialogTitle>
+                </DialogHeader>
+                <div className="flex justify-end gap-4">
+                    {img && <div className='relative rounded-sm size-24 border-[2px] flex justify-center items-center bg-gray-200'>
+                        <img className="max-w-full max-h-full" src={img} />
+                    </div>}
+                    {/* <div className='relative rounded-sm size-24 border-[2px] flex justify-center items-center bg-gray-200'>
+                        <Input type='file' placeholder='Select a file' className='w-full h-full opacity-5 absolute z-10 cursor-pointer' onChange={handleImage} />
+                        <div className='absolute text-center opacity-40'>
+                            <UploadIcon className='size-10 ml-1' />
+                            <p className=' opacity-40'>Upload</p>
+                        </div>
+                    </div> */}
+                </div>
+
+                <div>
+                    {/* <Label>Upload Approval Letter:</Label>
+                    <Input type="file" accept=".pdf" onChange={e => setPdf(e.target.files[0])} /> */}
+                </div>
+
+                <Input value={name} onChange={e => setName(e.target.value)} className='my-0' placeholder='Enter user name' />
+                <Input value={email} type='email' onChange={e => setEmail(e.target.value)} className='my-0' placeholder='Enter user Email' />
+                <Input value={phone} type='phone' onChange={e => setPhone(e.target.value)} className='my-0' placeholder='Enter user Phone' />
+                <Textarea value={address} onChange={e => setAddress(e.target.value)} className='my-0' placeholder='Enter user Address' />
+
+                <Select onValueChange={e => setStatus(e)}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder={status} className={`${status == 'Active' && 'placeholder-green-800'} ${status == 'InActive' && 'placeholder-red-800'}`} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="Active" className='text-green-900'>Active</SelectItem>
+                        <SelectItem value="InActive" className='text-red-800'>InActive</SelectItem>
+                        {/* <SelectItem value="system">System</SelectItem> */}
+                    </SelectContent>
+                </Select>
+
+                <Input value={city} onChange={e => setCity(e.target.value)} className='my-0' placeholder='Enter user City' />
+                <Input value={pinCode} onChange={e => setPinCode(e.target.value)} className='my-0' placeholder='Enter user pin-code' />
+
+                <Select onValueChange={e => setState(e)}>
+                    <SelectTrigger>
+                        <SelectValue placeholder={state} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {
+                            statesAndUTs.map(s => {
+                                return <SelectItem key={s} value={s}>{s}</SelectItem>
+                            })
+                        }
+                    </SelectContent>
+                </Select>
+                <Select onValueChange={e => setDistrict(e)}>
+                    <SelectTrigger>
+                        <SelectValue placeholder={district} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {
+                            state && stateDistricts[state].map(s => {
+                                return <SelectItem key={s} value={s}>{s}</SelectItem>
+                            })
+                        }
+                    </SelectContent>
+                </Select>
+                <Input value={refundAmount} onChange={e => setRefundAmount(e.target.value)} className='my-0' placeholder='Enter Refund Amount' />
+                <Select onValueChange={v => setFtype(v)}>
+                    <SelectTrigger className='mt-2'>
+                        <SelectValue placeholder="Delivery Franchise" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="Delivery Franchise">Delivery Franchise</SelectItem>
+                        <SelectItem value="Delivery Franchise Hub">Delivery Franchise Hub</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Input value={id} onChange={e => setId(e.target.value)} className='my-0' placeholder='Create user id' />
+                <Input value={password} onChange={e => setPassword(e.target.value)} className='my-0' placeholder='Create password' />
+
+
+                <Button disable={disable} onClick={submit} className="bg-green-900 text-white w-full p-2 rounded-md">
+                    Save
+                </Button>
+                {/* </div> */}
+
+            </DialogContent>
+        </Dialog>
+
+    )
+}
+
+
 
 
 
@@ -391,7 +562,6 @@ const stateDistricts = {
     Lakshadweep: ["Agatti", "Amini", "Andrott", "Bitra", "Chetlat", "Kadmat", "Kalpeni", "Kavaratti", "Minicoy"],
     Puducherry: ["Karaikal", "Mahe", "Pondicherry", "Yanam"]
 };
-
 
 
 const Create = ({ formId }) => {

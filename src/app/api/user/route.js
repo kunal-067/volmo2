@@ -145,3 +145,45 @@ export async function POST(req) {
         })
     }
 }
+
+export async function PUT(req) {
+    try {
+        const rawData = await req.json();
+        await User.findByIdAndUpdate(rawData.docid, rawData.data)
+
+        return NextResponse.json({
+            message: 'Successfully updated user details'
+        }, {
+            status: 201
+        })
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            message: "Something went wrong! please try again"
+        }, {
+            status: 500
+        })
+    }
+}
+
+export async function PATCH(req) {
+    try {
+        // console.log(req)
+        const data = await req.json();
+        console.log(data)
+        await User.findByIdAndDelete(data.docid);
+        // console.error(error);
+        return NextResponse.json({
+            message: "Deleted Successfully !"
+        }, {
+            status: 200
+        })
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            message: "Something went wrong! please try again"
+        }, {
+            status: 500
+        })
+    }    
+}
