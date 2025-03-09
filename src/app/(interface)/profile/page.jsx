@@ -63,7 +63,7 @@ function page() {
         <div className='pt-24 md:pt-28 flex justify-center bg-yellow-50'>
             <div className='max-w-[980px] w-full p-2 md:p-4 bg-yellow-50'>
                 <h2 className='text-[28px] p-1 md:text-[42px] font-medium leading-8'>Application No.: {id}</h2>
-                <marquee className='py-3 text-green-900 font-mono text-[16px] md:text-[18px] font-semibold'>Welcome {'Kunal Shroff'} - view your application</marquee>
+                <marquee className='py-3 text-green-900 font-mono text-[16px] md:text-[18px] font-semibold'>Welcome {name || 'Unknown'} - view your application</marquee>
                 <Button onClick={logOut} className='bg-red-600 float-right mb-1 rounded-2xl'>Logout</Button>
 
                 <div className='overflow-x-auto w-full bg-yellow-50'>
