@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* Google Tag Manager Script */}
         {/* Google Tag Manager - Head */}
-        <script dangerouslySetInnerHTML={{
+        {/* <script dangerouslySetInnerHTML={{
           __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -32,12 +32,12 @@ export default function RootLayout({ children }) {
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-MB4CQN88');
             `,
-        }} />
+        }} /> */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
 
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB4CQN88"
-          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        {/* <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB4CQN88"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> */}
 
         {children}
         <Toaster />
