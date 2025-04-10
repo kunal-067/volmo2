@@ -27,7 +27,7 @@ export default function Page() {
 
                     <div className='flex justify-center items-center w-full md:w-[25%]'>
                         <Mail className='size-6 mr-2' />
-                        <p className='text-[14px]'>support@valmologisticsdelivery.in</p>
+                        <p className='text-[14px]'>support@valmodeliverylogistics.in</p>
                     </div>
 
                     <div className='w-full md:w-[25%] text-gray-100 text-[20px] flex flex-col gap-2'>
@@ -37,7 +37,7 @@ export default function Page() {
                     </div>
                 </div>
                 <p className='px-8 md:px-28 py-4 text-[15px] leading-4 font-mono'>
-                    Disclaimer: Any official communication for business related formalities will be sent by Valmo using our authorised official email addresses (@valmologisticsdelivery.in or @meesho.com). Kindly DO NOT interact with any communications or requests for payments from any other sources or share any personal information.
+                    Disclaimer: Any official communication for business related formalities will be sent by Valmo using our authorised official email addresses (@valmodeliverylogistics.in or @meesho.com). Kindly DO NOT interact with any communications or requests for payments from any other sources or share any personal information.
                 </p>
                 <div className='px-8 md:px-28 pt-2 text-gray-200 border-t-[1px] border-gray-400'>
                     Copyright © 2024. All rights reserved.
